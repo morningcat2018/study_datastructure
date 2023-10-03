@@ -2,27 +2,9 @@
 #define MIN_HEAP_H
 
 #include <cassert>
+#include "index0_none.h"
 
 // using namespace std;
-
-// 索引0位置不存储数据 = 1
-// 索引0位置存储数据 = 0
-const int INDEX_0_FLAG = 1;
-
-int getParent(int index)
-{
-    return index / 2;
-}
-
-int getLeftChird(int index)
-{
-    return index * 2;
-}
-
-int getRightChird(int index)
-{
-    return index * 2 + 1;
-}
 
 // 最小堆
 template <typename Item>
@@ -66,7 +48,7 @@ MinHeap<Item>::MinHeap(Item arr[], int arr_length)
         data[i + 1] = arr[i];
     count = arr_length;
 
-    for (int i = count / 2; i >= 1; i--)
+    for (int i = getNotLeaf(count); i >= 1; i--)
         this->shiftDown(i);
 }
 

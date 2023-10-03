@@ -3,6 +3,7 @@
 
 // #include <algorithm>
 #include <cassert>
+#include "index0_none.h"
 
 using namespace std;
 
@@ -55,7 +56,7 @@ MaxHeap<Item>::MaxHeap(Item arr[], int arr_length)
         data[i + 1] = arr[i];
     count = arr_length;
 
-    for (int i = count / 2; i >= 1; i--)
+    for (int i = getNotLeaf(count); i >= 1; i--)
         this->shiftDown(i);
 }
 
@@ -122,10 +123,10 @@ template <typename Item>
 void MaxHeap<Item>::shiftUp(int index)
 {
     // 索引1位置是根节点
-    while (index > 1 && data[index / 2] < data[index])
+    while (index > 1 && data[getParent(index)] < data[index])
     {
-        std::swap(data[index / 2], data[index]);
-        index = index / 2; // 父节点
+        std::swap(data[getParent(index)], data[index]);
+        index = getParent(index); // 父节点
     }
 }
 
@@ -133,15 +134,15 @@ template <typename Item>
 void MaxHeap<Item>::shiftDown(int index)
 {
     // index*2 <= count 表示索引index节点有左孩子节点
-    while (index * 2 <= count)
+    while (getLeftChird(index) <= count)
     {
-        int temp = index * 2; // 初始化为左孩子节点
-        if (index * 2 + 1 <= count)
+        int temp = getLeftChird(index); // 初始化为左孩子节点
+        if (getRightChird(index) <= count)
         {
             // 当有右孩子节点时
-            if (data[index * 2 + 1] > data[index * 2])
+            if (data[getRightChird(index)] > data[getLeftChird(index)])
             {
-                temp = index * 2 + 1;
+                temp = getRightChird(index);
             }
         }
         if (data[index] >= data[temp])
