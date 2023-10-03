@@ -80,7 +80,19 @@ bool MaxHeap<Item>::isEmpty()
 template <typename Item>
 void MaxHeap<Item>::insert(Item item)
 {
-    assert(count + 1 <= capacity);
+    // assert(count + 1 <= capacity);
+    if (count + 1 > capacity)
+    {
+        capacity = capacity * 2;
+        Item *dataNew = new Item[capacity + 1];
+        for (int i = 1; i <= count; i++)
+        {
+            dataNew[i] = data[i];
+        }
+        delete data;
+        data = dataNew;
+        // cout << "data grew" << endl;
+    }
     data[count + 1] = item;
     count++;
     this->shiftUp(count);

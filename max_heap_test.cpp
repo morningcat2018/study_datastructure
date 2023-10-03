@@ -6,9 +6,9 @@ using namespace std;
 // g++ max_heap_test.cpp && ./a.out
 int main()
 {
-    MaxHeap<int> maxHeap(100);
+    MaxHeap<int> maxHeap(10);
     srand(time(NULL));
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 20; i++)
         maxHeap.insert(rand() % 100);
 
     // maxHeap.insert(46);
