@@ -12,7 +12,10 @@ int main()
     for (int i = 0; i < n; i++)
         arr[i] = rand() % 100;
     
-    heap_sort1(arr, n);
+
+    // heap_sort1(arr, n);
+    // heap_sort2(arr, n);
+    heap_sort(arr, n);
 
     for (int i = 0; i < n; i++)
         cout << arr[i] << " ";
