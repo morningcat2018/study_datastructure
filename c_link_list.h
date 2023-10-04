@@ -55,14 +55,6 @@ int getLength(ListNode *head)
     return length;
 }
 
-void printList(ListNode *head)
-{
-    ListNode *p;
-    for (p = head->next; p != NULL; p = p->next)
-        printf("%c ", p->data);
-    printf("\n");
-}
-
 ElemType valueOf(ListNode *head, int index)
 {
     ListNode *p;

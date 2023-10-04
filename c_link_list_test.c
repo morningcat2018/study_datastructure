@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include "c_link_list.h"
 
+void printList(ListNode *head)
+{
+    for (ListNode *p = head->next; p != NULL; p = p->next)
+        printf("%c ", p->data);
+    printf("\n");
+}
+
 // gcc c_link_list_test.c && ./a.out
 int main()
 {
