@@ -19,7 +19,7 @@ private:
     void __print()
     {
         for (int i = INDEX_0_FLAG; i < count + INDEX_0_FLAG; i++)
-            std::cout << data[i] << " ";
+            std::cout << data[indexes[i]] << " ";
         std::cout << std::endl;
     }
 
@@ -46,7 +46,7 @@ IndexMaxHeap<Item>::IndexMaxHeap(int capacity)
     reverse = new int[capacity + INDEX_0_FLAG];
     for (int i = 0; i < capacity + INDEX_0_FLAG; i++)
     {
-        reverse[i] = -1;
+        reverse[i] = INDEX_0_FLAG - 1;
     }
 
     count = 0;
@@ -56,10 +56,10 @@ IndexMaxHeap<Item>::IndexMaxHeap(int capacity)
 template <typename Item>
 IndexMaxHeap<Item>::IndexMaxHeap(Item arr[], int arr_length)
 {
-    // TODO 
+    // TODO 待修复
     data = new Item[arr_length + INDEX_0_FLAG];
-    // indexes = new int[capacity + INDEX_0_FLAG];
-    // reverse = new int[capacity + INDEX_0_FLAG];
+    indexes = new int[capacity + INDEX_0_FLAG]; // 如何初始化?
+    reverse = new int[capacity + INDEX_0_FLAG]; // 如何初始化?
     capacity = arr_length;
 
     for (int i = 0; i < arr_length; i++)
@@ -98,12 +98,20 @@ void IndexMaxHeap<Item>::insert(int index, Item item)
     {
         capacity = capacity * 2;
         Item *dataNew = new Item[capacity + INDEX_0_FLAG];
+        int *indexesNew = new int[capacity + INDEX_0_FLAG];
+        int *reverseNew = new int[capacity + INDEX_0_FLAG];
         for (int i = INDEX_0_FLAG; i < count + INDEX_0_FLAG; i++)
         {
             dataNew[i] = data[i];
+            indexesNew[i] = indexes[i];
+            reverseNew[i] = reverse[i];
         }
         delete data;
+        delete indexes;
+        delete reverse;
         data = dataNew;
+        indexes = indexesNew;
+        reverse = reverseNew;
     }
     assert(index >= 0 && index < capacity);
 
@@ -111,7 +119,7 @@ void IndexMaxHeap<Item>::insert(int index, Item item)
     data[index] = item;
 
     indexes[count + INDEX_0_FLAG] = index;
-    // reverse[index] = count + INDEX_0_FLAG;
+    reverse[index] = count + INDEX_0_FLAG;
 
     count++;
     this->shiftUp(count - 1 + INDEX_0_FLAG);
@@ -125,8 +133,8 @@ Item IndexMaxHeap<Item>::extractTop()
     Item heapTop = data[indexes[INDEX_0_FLAG]];
     std::swap(indexes[INDEX_0_FLAG], indexes[count - 1 + INDEX_0_FLAG]);
 
-    // reverse[indexes[INDEX_0_FLAG]] = INDEX_0_FLAG;
-    // reverse[indexes[count - 1 + INDEX_0_FLAG]] = -1;
+    reverse[indexes[INDEX_0_FLAG]] = INDEX_0_FLAG;
+    reverse[indexes[count - 1 + INDEX_0_FLAG]] = INDEX_0_FLAG - 1;
 
     count--;
     this->shiftDown(INDEX_0_FLAG);
@@ -140,8 +148,8 @@ int IndexMaxHeap<Item>::extractTopIndex()
     assert(count > 0);
     int heapTop = indexes[INDEX_0_FLAG] - INDEX_0_FLAG;
     std::swap(indexes[INDEX_0_FLAG], indexes[count - 1 + INDEX_0_FLAG]);
-    // reverse[indexes[INDEX_0_FLAG]] = INDEX_0_FLAG;
-    // reverse[indexes[count - 1 + INDEX_0_FLAG]] = -1;
+    reverse[indexes[INDEX_0_FLAG]] = INDEX_0_FLAG;
+    reverse[indexes[count - 1 + INDEX_0_FLAG]] = INDEX_0_FLAG - 1;
 
     count--;
     this->shiftDown(INDEX_0_FLAG);
@@ -192,8 +200,8 @@ void IndexMaxHeap<Item>::shiftUp(int index)
     while (index > INDEX_0_FLAG && data[indexes[getParent(index)]] < data[indexes[index]])
     {
         std::swap(indexes[getParent(index)], indexes[index]);
-        // reverse[indexes[getParent(index)]] = getParent(index);
-        // reverse[indexes[index]] = index;
+        reverse[indexes[getParent(index)]] = getParent(index);
+        reverse[indexes[index]] = index;
         index = getParent(index); // 父节点
     }
 }
@@ -218,8 +226,9 @@ void IndexMaxHeap<Item>::shiftDown(int index)
             break;
         }
         std::swap(indexes[temp], indexes[index]);
-        // reverse[indexes[temp]] = temp;
-        // reverse[indexes[index]] = index;
+        reverse[indexes[temp]] = temp;
+        reverse[indexes[index]] = index;
+
         index = temp;
     }
 }

@@ -21,8 +21,11 @@ int main()
         indexHeap.insert(i, rand() % 100);
     print(indexHeap);
 
-    // indexHeap.change(1, 100);
-    // print(indexHeap);
+    indexHeap.insert(0, 5);
+    indexHeap.insert(1, 7);
+    indexHeap.insert(2, 1);
+    indexHeap.change(0, 100);
+    print(indexHeap);
 
     return 0;
 }
