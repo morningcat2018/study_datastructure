@@ -16,6 +16,7 @@ typedef struct node
     ElemType data;       /*数据元素*/
     struct node *lchild; /*指向左孩子*/
     struct node *rchild; /*指向右孩子*/
+    int ltag, rtag;      /*增加的线索标记*/
 } BTNode;
 
 /*由str串创建二叉链*/
@@ -497,6 +498,72 @@ int LeafNodes(BTNode *b)
         num1 = LeafNodes(b->lchild);
         num2 = LeafNodes(b->rchild);
         return (num1 + num2);
+    }
+}
+
+BTNode *pre; /*全局变量*/
+void Thread(BTNode *p)
+{
+    if (p == NULL)
+    {
+        return;
+    }
+    Thread(p->lchild);     /*左子树线索化*/
+    if (p->lchild == NULL) /*前驱线索*/
+    {
+        p->lchild = pre; /*建立当前结点的前驱线索*/
+        p->ltag = 1;
+    }
+    else
+        p->ltag = 0;
+    if (pre->rchild == NULL) /*后继线索*/
+    {
+        pre->rchild = p; /*建立前驱结点的后继线索*/
+        pre->rtag = 1;
+    }
+    else
+        pre->rtag = 0;
+    pre = p;
+    Thread(p->rchild); /*右子树线索化*/
+}
+
+/*中序线索化二叉树*/
+BTNode *CreateThread(BTNode *b)
+{
+    BTNode *root;
+    root = (BTNode *)malloc(sizeof(BTNode)); /*创建根结点*/
+    root->ltag = 0;
+    root->rtag = 1;
+    root->rchild = b;
+    if (b == NULL) /*空二叉树*/
+        root->lchild = root;
+    else
+    {
+        root->lchild = b;
+        pre = root;         /*pre是*p的前驱结点,供加线索用*/
+        Thread(b);          /*中序遍历线索化二叉树*/
+        pre->rchild = root; /*最后处理,加入指向根结点的线索*/
+        pre->rtag = 1;
+        root->rchild = pre; /*根结点右线索化*/
+    }
+    return root;
+}
+
+// 线索化中序遍历
+void ThreadInOrder(BTNode *tb)
+{
+    BTNode *p = tb->lchild; /*指向根结点*/
+    while (p != tb)
+    {
+        while (p->ltag == 0)
+            p = p->lchild;
+        printf("%c ", p->data);
+        while (p->rtag == 1 && p->rchild != tb)
+        {
+            p = p->rchild;
+            printf("%c ", p->data);
+        }
+        p = p->rchild;
     }
 }
 

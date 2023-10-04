@@ -55,5 +55,10 @@ int main()
     PostOrder1(b);
     printf("\n非递归算法2:");
     PostOrder2(b);
+
+    BTNode *tb = CreateThread(b);
+    printf("\n线索中序序列:");
+    ThreadInOrder(tb);
+    printf("\n");
     return 0;
 }
