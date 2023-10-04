@@ -4,7 +4,7 @@
 #include <cassert>
 #include "index0_none.h"
 
-// 索引最大堆
+// 最大索引堆
 template <typename Item>
 class IndexMaxHeap
 {
@@ -35,6 +35,7 @@ public:
     Item getTop();
     Item getItem(int index);
     void change(int index, Item newItem);
+    bool contain(int i);
 };
 
 template <typename Item>
@@ -165,14 +166,25 @@ Item IndexMaxHeap<Item>::getTop()
 }
 
 template <typename Item>
+bool IndexMaxHeap<Item>::contain(int i)
+{
+    assert(i >= 0 && i < capacity);
+    // std::cout << i << std::endl;
+    // std::cout << reverse[i + INDEX_0_FLAG] << std::endl;
+    return reverse[i + INDEX_0_FLAG] != INDEX_0_FLAG - 1;
+}
+
+template <typename Item>
 Item IndexMaxHeap<Item>::getItem(int index)
 {
+    assert(contain(index));
     return data[index + INDEX_0_FLAG];
 }
 
 template <typename Item>
 void IndexMaxHeap<Item>::change(int index, Item newItem)
 {
+    assert(contain(index));
     index = index + INDEX_0_FLAG;
     data[index] = newItem;
 
