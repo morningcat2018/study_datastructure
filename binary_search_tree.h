@@ -31,6 +31,7 @@ private:
     void preOrder(Node *node);
     void inOrder(Node *node);
     void postOrder(Node *node);
+    void destroy(Node *node);
 
 public:
     BST();
@@ -56,7 +57,18 @@ BST<Key, Value>::BST()
 template <typename Key, typename Value>
 BST<Key, Value>::~BST()
 {
-    // TODO
+    // 使用后序遍历进行销毁
+    destroy(root);
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::destroy(Node *node)
+{
+    if (node == NULL)
+        return;
+    destroy(node->left);
+    destroy(node->right);
+    delete node;
 }
 
 template <typename Key, typename Value>
