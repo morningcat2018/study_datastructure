@@ -5,7 +5,7 @@
 int main()
 {
     time_t start_time = clock();
-    string file_name = "1.txt";
+    string file_name = "2.txt";
     vector<string> words;
     if (FileOps::readFile(file_name, words))
     {
@@ -21,21 +21,26 @@ int main()
                 bst.insert(*iter, 1);
                 // cout << bst.size() << endl;
             }
-
             else
             {
                 (*count)++;
                 // int c = (*count) + 1;
-                // cout << "----->" << c << endl;
                 // bst.insert(*iter, c);
             }
         }
         time_t end_time = clock();
 
-        string search_word = "god";
+        string search_word = "the";
         int count = bst.contain(search_word) ? *bst.search(search_word) : 0;
         cout << "出现次数:" << count << endl;
         cout << "花费时间:" << (end_time - start_time) / 1000 << " ms." << endl;
+
+        bst.preOrder();
+        cout << endl;
+        bst.inOrder();
+        cout << endl;
+        bst.postOrder();
+        cout << endl;
     }
     return 0;
 }

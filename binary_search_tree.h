@@ -28,6 +28,9 @@ private:
     Node *insert(Node *node, Key key, Value value);
     bool contain(Node *node, Key key);
     Value *search(Node *node, Key key);
+    void preOrder(Node *node);
+    void inOrder(Node *node);
+    void postOrder(Node *node);
 
 public:
     BST();
@@ -36,8 +39,11 @@ public:
     bool isEmpty();
     void insert(Key key, Value value); // 插入
     // void insert2(Key key, Value value); 非递归实现
-    bool contain(Key key);  // 查找
+    bool contain(Key key);  // 包含
     Value *search(Key key); // 查找
+    void preOrder();        // 前序遍历
+    void inOrder();         // 中序遍历
+    void postOrder();       // 后序遍历
 };
 
 template <typename Key, typename Value>
@@ -124,6 +130,54 @@ template <typename Key, typename Value>
 Value *BST<Key, Value>::search(Key key)
 {
     return search(root, key);
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::preOrder(Node *node)
+{
+    if (node == NULL)
+        return;
+    cout << node->key << " ";
+    preOrder(node->left);
+    preOrder(node->right);
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::preOrder()
+{
+    preOrder(root);
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::inOrder(Node *node)
+{
+    if (node == NULL)
+        return;
+    inOrder(node->left);
+    cout << node->key << " ";
+    inOrder(node->right);
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::inOrder()
+{
+    inOrder(root);
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::postOrder(Node *node)
+{
+    if (node == NULL)
+        return;
+    postOrder(node->left);
+    postOrder(node->right);
+    cout << node->key << " ";
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::postOrder()
+{
+    postOrder(root);
 }
 
 #endif
