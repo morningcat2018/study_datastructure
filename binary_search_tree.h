@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <queue>
 using namespace std;
 
 template <typename Key, typename Value>
@@ -45,6 +46,7 @@ public:
     void preOrder();        // 前序遍历
     void inOrder();         // 中序遍历
     void postOrder();       // 后序遍历
+    void levelOrder();      // 层序遍历
 };
 
 template <typename Key, typename Value>
@@ -69,6 +71,7 @@ void BST<Key, Value>::destroy(Node *node)
     destroy(node->left);
     destroy(node->right);
     delete node;
+    count--;
 }
 
 template <typename Key, typename Value>
@@ -190,6 +193,24 @@ template <typename Key, typename Value>
 void BST<Key, Value>::postOrder()
 {
     postOrder(root);
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::levelOrder()
+{
+    queue<Node *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+
+        Node *node = q.front(); // 不太理解为啥分两步
+        q.pop();
+        if (node->left != NULL)
+            q.push(node->left);
+        if (node->right != NULL)
+            q.push(node->right);
+        cout << node->key << " ";
+    }
 }
 
 #endif

@@ -41,6 +41,8 @@ int main()
         cout << endl;
         bst.postOrder();
         cout << endl;
+        bst.levelOrder();
+        cout << endl;
     }
     return 0;
 }
