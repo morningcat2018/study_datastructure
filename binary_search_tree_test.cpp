@@ -37,11 +37,11 @@ int main()
 
         // bst.display();
         bst.preOrder();
-        bst.preOrderNotRecursion();
+        // bst.preOrderNotRecursion();
         bst.inOrder();
-        bst.inOrderNotRecursion();
+        // bst.inOrderNotRecursion();
         bst.postOrder();
-        bst.postOrderNotRecursion();
+        // bst.postOrderNotRecursion();
         // bst.levelOrder();
     }
     return 0;

@@ -35,6 +35,10 @@ private:
     void postOrder(Node *node);
     void destroy(Node *node);
     void display(Node *node);
+    Node *minimum(Node *node);
+    Node *maximum(Node *node);
+    Node *removeMin(Node *node);
+    Node *removeMax(Node *node);
 
 public:
     BST();
@@ -50,9 +54,13 @@ public:
     void postOrder();       // 后序遍历
     void levelOrder();      // 层序遍历
     void display();
-    void preOrderNotRecursion();
-    void inOrderNotRecursion();
-    void postOrderNotRecursion();
+    void preOrderNotRecursion();  // 前序遍历 非递归 栈
+    void inOrderNotRecursion();   // 中序遍历 非递归 栈
+    void postOrderNotRecursion(); // 后序遍历 非递归 栈
+    Key minimum();                // 当前树的最小值
+    Key maximum();                // 当前树的最大值
+    void removeMin();
+    void removeMax();
 };
 
 template <typename Key, typename Value>
@@ -284,21 +292,25 @@ ChatGPT NB
 template <typename Key, typename Value>
 void BST<Key, Value>::postOrderNotRecursion()
 {
-    stack<Node*> stack1, stack2;
+    stack<Node *> stack1, stack2;
     stack1.push(root);
-    while (!stack1.empty()) {
-        Node* node = stack1.top();
+    while (!stack1.empty())
+    {
+        Node *node = stack1.top();
         stack1.pop();
         stack2.push(node);
-        if (node->left) {
+        if (node->left)
+        {
             stack1.push(node->left);
         }
-        if (node->right) {
+        if (node->right)
+        {
             stack1.push(node->right);
         }
     }
-    while (!stack2.empty()) {
-        Node* node = stack2.top();
+    while (!stack2.empty())
+    {
+        Node *node = stack2.top();
         stack2.pop();
         cout << node->key << " ";
     }
@@ -327,6 +339,80 @@ void BST<Key, Value>::display()
 {
     display(root);
     cout << endl;
+}
+
+template <typename Key, typename Value>
+typename BST<Key, Value>::Node *BST<Key, Value>::minimum(Node *node)
+{
+    if (node->left == NULL)
+        return node;
+    return minimum(node->left);
+}
+
+template <typename Key, typename Value>
+Key BST<Key, Value>::minimum()
+{
+    assert(count > 0);
+    Node *node = minimum(root);
+    return node->key;
+}
+
+template <typename Key, typename Value>
+typename BST<Key, Value>::Node *BST<Key, Value>::maximum(Node *node)
+{
+    if (node->right == NULL)
+        return node;
+    return maximum(node->right);
+}
+
+template <typename Key, typename Value>
+Key BST<Key, Value>::maximum()
+{
+    assert(count > 0);
+    Node *node = maximum(root);
+    return node->key;
+}
+
+template <typename Key, typename Value>
+typename BST<Key, Value>::Node *BST<Key, Value>::removeMin(Node *node)
+{
+    if (node->left == NULL)
+    {
+        Node *rightNode = node->right;
+        delete node;
+        count--;
+        return rightNode;
+    }
+    node->left = removeMin(node->left);
+    return node;
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::removeMin()
+{
+    if (root != NULL)
+        root = removeMin(root);
+}
+
+template <typename Key, typename Value>
+typename BST<Key, Value>::Node *BST<Key, Value>::removeMax(Node *node)
+{
+    if (node->right == NULL)
+    {
+        Node *leftNode = node->left;
+        delete node;
+        count--;
+        return leftNode;
+    }
+    node->right = removeMax(node->right);
+    return node;
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::removeMax()
+{
+    if (root != NULL)
+        root = removeMax(root);
 }
 
 #endif
