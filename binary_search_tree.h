@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cassert>
 #include <queue>
+#include <stack>
 using namespace std;
 
 template <typename Key, typename Value>
@@ -33,6 +34,7 @@ private:
     void inOrder(Node *node);
     void postOrder(Node *node);
     void destroy(Node *node);
+    void display(Node *node);
 
 public:
     BST();
@@ -47,6 +49,10 @@ public:
     void inOrder();         // 中序遍历
     void postOrder();       // 后序遍历
     void levelOrder();      // 层序遍历
+    void display();
+    void preOrderNotRecursion();
+    void inOrderNotRecursion();
+    void postOrderNotRecursion();
 };
 
 template <typename Key, typename Value>
@@ -161,6 +167,7 @@ template <typename Key, typename Value>
 void BST<Key, Value>::preOrder()
 {
     preOrder(root);
+    cout << endl;
 }
 
 template <typename Key, typename Value>
@@ -177,6 +184,7 @@ template <typename Key, typename Value>
 void BST<Key, Value>::inOrder()
 {
     inOrder(root);
+    cout << endl;
 }
 
 template <typename Key, typename Value>
@@ -193,6 +201,7 @@ template <typename Key, typename Value>
 void BST<Key, Value>::postOrder()
 {
     postOrder(root);
+    cout << endl;
 }
 
 template <typename Key, typename Value>
@@ -211,6 +220,113 @@ void BST<Key, Value>::levelOrder()
             q.push(node->right);
         cout << node->key << " ";
     }
+    cout << endl;
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::preOrderNotRecursion()
+{
+    stack<Node *> s;
+    s.push(root);
+    while (!s.empty()) /*栈不空时循环*/
+    {
+        Node *node = s.top();
+        s.pop();
+        cout << node->key << " ";
+        if (node->right != NULL)
+            s.push(node->right);
+        if (node->left != NULL)
+            s.push(node->left);
+    }
+    cout << endl;
+}
+
+/**
+ while (!stack.empty() || root != null) {
+    while (root != null) {
+        stack.push(root);
+        root = root.left;
+    }
+    root = stack.pop();
+    rs.add(root.getValue());
+    root = root.right;
+}
+————————————————
+版权声明：本文为CSDN博主「morningcat2018」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/u013837825/article/details/105554745
+*/
+// https://blog.csdn.net/u013837825/article/details/106557694
+// https://blog.csdn.net/u013837825/article/details/113756063
+// https://blog.csdn.net/u013837825/article/details/120857910
+template <typename Key, typename Value>
+void BST<Key, Value>::inOrderNotRecursion()
+{
+    stack<Node *> s;
+    Node *p = root;
+    while (!s.empty() || p != NULL)
+    {
+        while (p != NULL)
+        {
+            s.push(p);
+            p = p->left;
+        }
+        p = s.top();
+        s.pop();
+        cout << p->key << " ";
+        p = p->right;
+    }
+    cout << endl;
+}
+
+/**
+ChatGPT NB
+*/
+template <typename Key, typename Value>
+void BST<Key, Value>::postOrderNotRecursion()
+{
+    stack<Node*> stack1, stack2;
+    stack1.push(root);
+    while (!stack1.empty()) {
+        Node* node = stack1.top();
+        stack1.pop();
+        stack2.push(node);
+        if (node->left) {
+            stack1.push(node->left);
+        }
+        if (node->right) {
+            stack1.push(node->right);
+        }
+    }
+    while (!stack2.empty()) {
+        Node* node = stack2.top();
+        stack2.pop();
+        cout << node->key << " ";
+    }
+    cout << endl;
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::display(Node *node)
+{
+    if (node == NULL)
+        return;
+    cout << node->key << " ";
+    if (node->left != NULL || node->right != NULL)
+    {
+        cout << "(";
+        display(node->left);
+        if (node->right != NULL)
+            cout << ",";
+        display(node->right);
+        cout << ")";
+    }
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::display()
+{
+    display(root);
+    cout << endl;
 }
 
 #endif

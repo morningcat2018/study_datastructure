@@ -35,14 +35,14 @@ int main()
         cout << "出现次数:" << count << endl;
         cout << "花费时间:" << (end_time - start_time) / 1000 << " ms." << endl;
 
+        // bst.display();
         bst.preOrder();
-        cout << endl;
+        bst.preOrderNotRecursion();
         bst.inOrder();
-        cout << endl;
+        bst.inOrderNotRecursion();
         bst.postOrder();
-        cout << endl;
-        bst.levelOrder();
-        cout << endl;
+        bst.postOrderNotRecursion();
+        // bst.levelOrder();
     }
     return 0;
 }

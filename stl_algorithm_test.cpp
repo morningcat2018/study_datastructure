@@ -1,12 +1,12 @@
 #include <iostream>
-#include <vector>
+// #include <vector>
 
-#include <algorithm> // 算法头文件
-#include <iterator>  // 迭代器头文件
+// #include <algorithm> // 算法头文件
+// #include <iterator>  // 迭代器头文件
 #include <numeric>   // 数值算法头文件
-#include <random>    // 随机数生成器头文件
-#include <chrono>    // 日期和时间算法头文件
-#include <ctime>     // 时间头文件
+// #include <random>    // 随机数生成器头文件
+// #include <chrono>    // 日期和时间算法头文件
+// #include <ctime>     // 时间头文件
 
 using namespace std;
 
