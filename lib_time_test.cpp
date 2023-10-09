@@ -31,4 +31,5 @@ int main()
     // strftime(buffer, 32, "%Y%0m%0e_%H%M%S", tm_ptr); // 以年月日_时分秒的形式表示当前时间
     strftime(buffer, 32, "%Y-%m-%d %H:%M:%S", tm_ptr); // 格式化输出时间
     printf("%s\n", buffer);
+    return 0;
 }

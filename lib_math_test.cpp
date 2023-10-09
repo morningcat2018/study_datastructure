@@ -31,4 +31,5 @@ int main()
     // 幂函数
     double r7 = pow(x, 10); // x^10
     double r8 = sqrt(x);    // 计算平方根
+    return 0;
 }
