@@ -24,6 +24,13 @@ private:
             this->value = value;
             this->left = this->right = NULL;
         }
+        Node(Node *node)
+        {
+            this->key = node->key;
+            this->value = node->value;
+            this->left = node->left;
+            this->right = node->right;
+        }
     };
     Node *root; // 根节点
     int count;  // 节点数量
@@ -39,6 +46,7 @@ private:
     Node *maximum(Node *node);
     Node *removeMin(Node *node);
     Node *removeMax(Node *node);
+    Node *remove(Node *node, Key key);
 
 public:
     BST();
@@ -61,6 +69,7 @@ public:
     Key maximum();                // 当前树的最大值
     void removeMin();
     void removeMax();
+    void remove(Key key);
 };
 
 template <typename Key, typename Value>
@@ -413,6 +422,77 @@ void BST<Key, Value>::removeMax()
 {
     if (root != NULL)
         root = removeMax(root);
+}
+
+// Hubbard Deletion
+template <typename Key, typename Value>
+typename BST<Key, Value>::Node *BST<Key, Value>::remove(Node *node, Key key)
+{
+    if (node == NULL)
+        return NULL;
+
+    if (key < node->key)
+    {
+        node->left = remove(node->left, key);
+        return node;
+    }
+    if (key > node->key)
+    {
+        node->right = remove(node->right, key);
+        return node;
+    }
+    // key == node.key
+
+    if (node->left == NULL)
+    {
+        // 只有右孩子
+        Node *rightNode = node->right;
+        delete node;
+        count--;
+        return rightNode;
+    }
+    if (node->right == NULL)
+    {
+        // 只有左孩子
+        Node *leftNode = node->left;
+        delete node;
+        count--;
+        return leftNode;
+    }
+    // 两边都有节点
+    // 第一种写法
+    Node *minNode = minimum(node->right);
+    Node *addNode = new Node(minNode->key, minNode->value);
+    count++;
+    addNode->right = node->right;
+    addNode->left = node->left;
+    delete minNode;
+    count--;
+    delete node;
+    count--;
+    return addNode;
+
+    // 第二种写法
+    // Node *successor = new Node(minimum(node->right));
+    // count++;
+    // successor->right = removeMin(node->right);
+    // successor->left = node->left;
+    // delete node;
+    // count--;
+
+    // 第三种写法
+    // Node *successor = new Node(maximum(node->left));
+    // successor->left = removeMax(node->left);
+    // successor->right = node->right;
+    // delete node;
+
+    // return successor;
+}
+
+template <typename Key, typename Value>
+void BST<Key, Value>::remove(Key key)
+{
+    root = remove(root, key);
 }
 
 #endif

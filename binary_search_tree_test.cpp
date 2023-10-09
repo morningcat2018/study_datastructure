@@ -36,13 +36,16 @@ int main()
         cout << "花费时间:" << (end_time - start_time) / 1000 << " ms." << endl;
 
         // bst.display();
-        bst.preOrder();
+        // bst.preOrder();
         // bst.preOrderNotRecursion();
-        bst.inOrder();
+        // bst.inOrder();
         // bst.inOrderNotRecursion();
-        bst.postOrder();
+        // bst.postOrder();
         // bst.postOrderNotRecursion();
         // bst.levelOrder();
+
+        bst.remove("c");
+        bst.inOrderNotRecursion();
     }
     return 0;
 }
