@@ -1,10 +1,10 @@
 #ifndef HEAP_SORT_H
 #define HEAP_SORT_H
 
-#include <iostream>
+// #include <iostream>
 #include "max_heap.h"
 
-using namespace std;
+// using namespace std;
 
 template <typename T>
 void heap_sort1(T arr[], int arr_length)

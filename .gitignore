@@ -5,3 +5,5 @@ __pycache__/
 py/__pycache__/**
 .DS_Store
 *.class
+1.txt
+build/
