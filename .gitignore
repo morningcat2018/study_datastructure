@@ -7,3 +7,6 @@ py/__pycache__/**
 *.class
 1.txt
 build/
+file1
+file1_w
+.vscode/
