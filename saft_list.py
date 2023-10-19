@@ -25,6 +25,7 @@ sl = SafeList()
 def tag():
     sl[0] +=1
 
+# python3 saft_list.py
 if __name__ == '__main__':
     # threads = [threading.Thread(target=tag) for i in range(10000)]
     # for t in threads:
