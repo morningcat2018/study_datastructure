@@ -16,10 +16,15 @@ class MinHeap(object):
         self.data = []
         self.data.append('\0')
         self.count = 0
+        self.capacity = 1
 
     def push(self, item):
         self.count += 1
-        self.data.append(item)
+        if self.count < self.capacity:
+            self.data[self.count] = item
+        else:
+            self.data.append(item)
+            self.capacity += 1
         self.__up(self.count)
         return True
 
@@ -56,13 +61,50 @@ class MinHeap(object):
         return self.data[1]
 
 
-if __name__ == '__main__':
+class KHeap(MinHeap):
+
+    def __init__(self, k):
+        super().__init__()
+        self.limit_count = k
+    
+    def push(self, item):
+        if self.count < self.limit_count:
+            super().push(item)
+            return 
+        if super().get_min() < item:
+            super().pop()
+            super().push(item)
+    
+    def pop(self):
+        raise Exception("Unsupported operation")
+
+
+def test_MinHeap():
     minH = MinHeap()
     minH.push(23)
     minH.push(17)
     minH.push(3)
     minH.push(33)
     minH.push(123)
+    minH.pop()
+    minH.push(1024)
     while not minH.is_empty():
         print(minH.get_min())
         minH.pop()
+
+
+def test_KHeap():
+    heap = KHeap(3)
+    heap.push(23)
+    heap.push(17)
+    heap.push(3)
+    heap.push(33)
+    heap.push(123)
+    heap.push(1024)
+    print(heap.get_min())
+
+
+if __name__ == '__main__':
+    test_MinHeap()
+    print("*" * 30)
+    test_KHeap()
