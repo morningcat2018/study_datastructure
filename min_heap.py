@@ -49,6 +49,8 @@ class MinHeap(object):
             temp = left(index)
             if right(index) <= self.count and self.data[right(index)] < self.data[left(index)]:
                 temp = right(index)
+            if self.data[index] <= self.data[temp]:
+                break
             # swap data[temp] data[index]
             self.data[temp], self.data[index] = self.data[index], self.data[temp]
             index = temp
@@ -89,8 +91,8 @@ def test_MinHeap():
     minH.pop()
     minH.push(1024)
     while not minH.is_empty():
-        print(minH.get_min())
-        minH.pop()
+        print(minH.pop())
+        # minH.pop()
 
 
 def test_KHeap():
