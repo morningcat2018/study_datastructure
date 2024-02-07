@@ -27,7 +27,7 @@
 
 python
 
-[min_heap.py](/min_heap.py)
+[min_heap.py](/python/min_heap.py)
 
 ## 灵活的配置是否使用索引0的位置
 
